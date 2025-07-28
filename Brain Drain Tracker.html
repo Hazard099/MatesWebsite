@@ -11,6 +11,59 @@
             box-sizing: border-box;
         }
 
+        .about-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .about-section h3 {
+            color: #003366;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .about-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .about-item h4 {
+            color: #0066cc;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .about-item p {
+            margin-bottom: 0;
+            font-size: 14px;
+        }
+
+        .disclaimer {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #0066cc;
+            font-size: 13px;
+            color: #666;
+            border-radius: 0 4px 4px 0;
+        }
+
+        @media (max-width: 768px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         body {
             font-family: Arial, sans-serif;
             line-height: 1.4;
@@ -438,24 +491,23 @@
             <p>Tracking scientific talent migration from US research institutions to international positions</p>
         </div>
     </div>
-
-    <div class="container">
-        <div class="stats-bar">
-            <div class="stats-row">
-                <div class="stat-item">
-                    Total Scientists: <span class="stat-number" id="totalScientists">9</span>
-                </div>
-                <div class="stat-item">
-                    Top Destination: <span class="stat-number" id="topDestination">Loading...</span>
-                </div>  
-                <div class="stat-item">
-                    Destination Countries: <span class="stat-number" id="uniqueDestinations">Loading...</span>
-                </div>
-                <div class="stat-item">
-                    Last Updated: <span class="stat-number">July 2025</span>
-                </div>
+        <div class="container">
+            <div class="stats-bar">
+                <div class="stats-row">
+                    <div class="stat-item">
+                        Total Scientists: <span class="stat-number" id="totalScientists">Loading...</span>
+                    </div>
+                    <div class="stat-item">
+                        Top Destination: <span class="stat-number" id="topDestination">Loading...</span>
+                    </div>  
+                    <div class="stat-item">
+                        Destination Countries: <span class="stat-number" id="uniqueDestinations">Loading...</span>
+                    </div>
+                    <div class="stat-item">
+                        Last Updated: <span class="stat-number">July 2025</span>
             </div>
         </div>
+    </div>
 
         <div class="controls">
             <div class="controls-row">
@@ -475,7 +527,7 @@
                         <option value="">All Countries</option>
                     </select>
                 </div>
-                <button class="btn" onclick="openModal()">Add New Record</button>
+                <a href="https://forms.gle/7bB6D5sxEXT1VyHSA" target="_blank" class="btn">Submit New Entry</a>
             </div>
         </div>
 
@@ -507,53 +559,32 @@
             <button class="btn export-btn" onclick="exportToJSON()">Export to JSON</button>
             <span style="margin-left: 15px; color: #666;">Last database update: July 23, 2025</span>
         </div>
-    </div>
 
-    <!-- Modal -->
-    <div id="scientistModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Add New Scientist Record</h2>
-                <span class="close" onclick="closeModal()">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Full Name <span class="required">*</span></label>
-                        <input type="text" id="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Previous US Institution <span class="required">*</span></label>
-                        <input type="text" id="previousInstitution" required>
-                    </div>
+        <div class="about-section">
+            <h3>About This Database</h3>
+            <p>This database tracks the migration of scientific talent from US research institutions to international positions. It is maintained as a community-sourced project to provide transparency into the movement of researchers and academics.</p>
+            
+            <div class="about-grid">
+                <div class="about-item">
+                    <h4>Data Sources</h4>
+                    <p>All entries are based on publicly available information from institutional announcements, LinkedIn profiles, news articles, and community submissions.</p>
                 </div>
                 
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Specialization <span class="required">*</span></label>
-                        <input type="text" id="specialization" placeholder="e.g., Machine Learning, Molecular Biology" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Destination Country <span class="required">*</span></label>
-                        <input type="text" id="destination" required>
-                    </div>
+                <div class="about-item">
+                    <h4>How to Contribute</h4>
+                    <p>Know of a scientist who has migrated? Submit their information using our form. All submissions are reviewed before publication to ensure accuracy.</p>
                 </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>New Institution</label>
-                        <input type="text" id="newInstitution">
-                    </div>
-                    <div class="form-group">
-                        <label>Profile URL</label>
-                        <input type="url" id="linkedin" placeholder="LinkedIn or personal website URL">
-                    </div>
+                
+                <div class="about-item">
+                    <h4>Contact & Corrections</h4>
+                    <p>For corrections, removals, or questions, please contact us. If you are listed and prefer not to be included, we will promptly remove your entry.</p>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-                <button type="button" class="btn" onclick="addScientist()">Add Record</button>
+            
+            <div class="disclaimer">
+                <strong>Disclaimer:</strong> This database is for informational and research purposes only. All information is sourced from publicly available materials. We respect privacy and will remove entries upon request.
             </div>
+        </div>
         </div>
     </div>
 
@@ -915,6 +946,4 @@
         document.addEventListener('DOMContentLoaded', initializeApp);
     </script>
 </body>
-</html>appendChild(a);
-            a.click();
-            document.body.
+</html>
