@@ -1,0 +1,1241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mental Health AI Legislation Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.4;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .header {
+            background-color: #ffffff;
+            border-bottom: 3px solid #0066cc;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: bold;
+            color: #003366;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .stats-bar {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .stats-row {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            color: #666;
+        }
+
+        .stat-number {
+            font-weight: bold;
+            color: #0066cc;
+        }
+
+        .controls {
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 4px;
+        }
+
+        .controls-row {
+            display: grid;
+            grid-template-columns: 1fr auto auto;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-group label {
+            font-size: 14px;
+            color: #333;
+            font-weight: normal;
+            white-space: nowrap;
+        }
+
+        .search-group input, .search-group select {
+            padding: 6px 8px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+            border-radius: 3px;
+            background: white;
+        }
+
+        .search-group input {
+            width: 250px;
+        }
+
+        .search-group select {
+            min-width: 150px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            font-size: 14px;
+            border: 1px solid #0066cc;
+            background: #0066cc;
+            color: white;
+            border-radius: 3px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #0052a3;
+        }
+
+        .section-header {
+            background: #003366;
+            color: white;
+            padding: 15px 20px;
+            margin: 30px 0 0 0;
+            border-radius: 4px 4px 0 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .section-header:first-of-type {
+            margin-top: 0;
+        }
+
+        .table-container {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 4px 4px;
+            overflow: hidden;
+        }
+
+        .table-container.first {
+            border-radius: 4px;
+        }
+
+        .table-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .results-info {
+            font-size: 13px;
+            color: #666;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #f1f3f4;
+            padding: 12px 15px;
+            text-align: left;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        th:hover {
+            background: #e8f0fe;
+        }
+
+        td {
+            padding: 15px 15px;
+            border-bottom: 1px solid #eee;
+            vertical-align: top;
+        }
+
+        tr {
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .bill-name {
+            font-weight: bold;
+            color: #0066cc;
+            cursor: pointer;
+        }
+
+        .bill-name:hover {
+            text-decoration: underline;
+        }
+
+        .state {
+            color: #333;
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .bill-number {
+            color: #666;
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        .sponsor {
+            color: #666;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            text-align: center;
+            white-space: nowrap;
+            display: inline-block;
+            min-width: fit-content;
+        }
+
+        .status.passed {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.enacted {
+            background: #c3e6cb;
+            color: #1e7e34;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.committee {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status.introduced {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.active {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .date {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .no-data {
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            font-style: italic;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 3% auto;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            color: #333;
+            margin: 0;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .close {
+            color: #999;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            color: #333;
+        }
+
+        .bill-details {
+            margin-bottom: 20px;
+        }
+
+        .bill-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+
+        .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .meta-label {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .meta-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .summary-section {
+            margin-bottom: 20px;
+        }
+
+        .summary-section h3 {
+            color: #003366;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .summary-section p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        .key-points {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-points li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .key-points li:before {
+            content: '•';
+            color: #0066cc;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .external-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 16px;
+            background: #0066cc;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .external-link:hover {
+            background: #0052a3;
+        }
+
+        .about-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .about-section h3 {
+            color: #003366;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .about-section p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .disclaimer {
+            background: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #0066cc;
+            font-size: 13px;
+            color: #666;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .home-button a {
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+
+        .home-button a:hover {
+            background: rgba(0, 0, 0, 0.9);
+        }
+
+        @media (max-width: 768px) {
+            .controls-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .search-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+            
+            .search-group input {
+                width: 100%;
+            }
+            
+            table {
+                font-size: 12px;
+            }
+            
+            th, td {
+                padding: 8px 10px;
+            }
+
+            .bill-meta {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="home-button">
+        <a href="index.html">Who am I?</a>
+    </div>
+    
+    <div class="header">
+        <div class="header-content">
+            <h1>Mental Health AI Legislation Tracker</h1>
+            <p>Tracking state-level legislation regulating artificial intelligence in mental health services</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="stats-bar">
+            <div class="stats-row">
+                <div class="stat-item">
+                    Total Bills: <span class="stat-number" id="totalBills">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Passed Into Law: <span class="stat-number" id="passedBills">Loading...</span>
+                </div>  
+                <div class="stat-item">
+                    Active States: <span class="stat-number" id="activeStates">Loading...</span>
+                </div>
+                <div class="stat-item">
+                    Last Updated: <span class="stat-number">August 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <div class="controls-row">
+                <div class="search-group">
+                    <label>Search:</label>
+                    <input type="text" id="searchInput" placeholder="Bill name, state, sponsor...">
+                </div>
+                <div class="search-group">
+                    <label>Filter by State:</label>
+                    <select id="stateFilter">
+                        <option value="">All States</option>
+                    </select>
+                </div>
+                <div class="search-group">
+                    <label>Status:</label>
+                    <select id="statusFilter">
+                        <option value="">All Statuses</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- State Legislation Section -->
+        <div class="section-header">State Legislation</div>
+        <div class="table-container">
+            <div class="table-header">
+                <span>State Legislation Results</span>
+                <span class="results-info" id="stateResultsInfo">Loading...</span>
+            </div>
+            <table id="stateTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortStateTable(0, 'state')">State</th>
+                        <th onclick="sortStateTable(1, 'billNumber')">Bill Number</th>
+                        <th onclick="sortStateTable(2, 'billName')">Bill Name</th>
+                        <th onclick="sortStateTable(3, 'sponsor')">Primary Sponsor</th>
+                        <th onclick="sortStateTable(4, 'lastAction')">Last Action</th>
+                        <th onclick="sortStateTable(5, 'status')">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="stateTableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Federal Legislation Section -->
+        <div class="section-header">Federal Legislation</div>
+        <div class="table-container">
+            <div class="table-header">
+                <span>Federal Legislation Results</span>
+                <span class="results-info" id="federalResultsInfo">Loading...</span>
+            </div>
+            <table id="federalTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortFederalTable(0, 'state')">Level</th>
+                        <th onclick="sortFederalTable(1, 'billNumber')">Bill Number</th>
+                        <th onclick="sortFederalTable(2, 'billName')">Bill Name</th>
+                        <th onclick="sortFederalTable(3, 'sponsor')">Primary Sponsor</th>
+                        <th onclick="sortFederalTable(4, 'lastAction')">Last Action</th>
+                        <th onclick="sortFederalTable(5, 'status')">Status</th>
+                    </tr>
+                </thead>
+                <tbody id="federalTableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Modal for bill details -->
+        <div id="billModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="modalBillName">Bill Details</h2>
+                    <span class="close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Bill details will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <div class="about-section">
+            <h3>About This Tracker</h3>
+            <p>This database tracks state-level legislation specifically addressing the use of artificial intelligence in mental health services. We focus on promising bills that have advanced through the legislative process or show strong support.</p>
+            
+            <div class="disclaimer">
+                <strong>Important Disclaimer:</strong> This tracker is powered by AI-assisted research and data aggregation. While we strive for accuracy, all information should be independently verified through official legislative sources. Data is compiled through automated searches of federal and state legislative databases, news sources, and policy tracking systems, then verified against official records.
+            </div>
+
+            <h4 style="color: #003366; margin-top: 25px; margin-bottom: 15px; font-size: 16px;">Bill Selection Criteria</h4>
+            <p>New bills are identified through systematic monitoring of:</p>
+            <ul style="margin-left: 20px; line-height: 1.6;">
+                <li><strong>Legislative Databases:</strong> Regular searches across all 50 states and federal Congress for AI + mental health keywords</li>
+                <li><strong>Policy Impact:</strong> Bills that have passed committee, received significant co-sponsorship, or advanced through the legislative process</li>
+                <li><strong>Scope Requirements:</strong> Legislation specifically regulating AI in mental health, therapy, counseling, or behavioral health services</li>
+                <li><strong>Stakeholder Activity:</strong> Bills with documented support from mental health organizations, advocacy groups, or industry associations</li>
+                <li><strong>Media Coverage:</strong> Legislation receiving coverage in legal, healthcare, or technology publications</li>
+            </ul>
+            <p style="margin-top: 15px;">We prioritize bills with momentum over purely introductory legislation to focus on policy developments likely to impact the mental health AI landscape.</p>
+            
+            <div class="disclaimer" style="margin-top: 20px;">
+                <strong>Note:</strong> This tracker focuses on legislation that has significant momentum - bills that have passed, are advancing through committees, or have substantial legislative support. We update weekly to capture the most current developments in mental health AI regulation.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State abbreviation mapping
+        const stateAbbreviations = {
+            'Utah': 'UT',
+            'Illinois': 'IL',
+            'Nevada': 'NV',
+            'California': 'CA',
+            'New York': 'NY',
+            'Maryland': 'MD',
+            'Arizona': 'AZ',
+            'New Jersey': 'NJ',
+            'Federal': 'Federal'
+        };
+
+        let allLegislation = [
+            // Updated bills based on sponsor verification - 2025-08-18 research
+            {
+                billName: "Artificial Intelligence Amendments",
+                billNumber: "HB 452",
+                state: "Utah",
+                sponsor: "Rep. Jefferson Moss (R-51)",
+                party: "Republican",
+                status: "Enacted",
+                lastAction: "2025-05-07",
+                introduced: "2025-01-10",
+                signedDate: "2025-03-25",
+                effectiveDate: "2025-05-07",
+                summary: "Creates a framework for responsible AI development in mental health, establishing consumer protections for mental health chatbots that use generative AI.",
+                keyProvisions: [
+                    "Regulates 'mental health chatbots' using generative AI for conversations similar to licensed therapists",
+                    "Prohibits selling or sharing individually identifiable health information with third parties",
+                    "Mandates clear disclosure that chatbot is AI and not human before access",
+                    "Requires periodic reminders during conversations",
+                    "Imposes advertising restrictions requiring clear identification of sponsored content",
+                    "Provides affirmative defense for companies complying with filed policies"
+                ],
+                enforcement: "Utah Division of Consumer Protection oversight and enforcement. Penalties up to $2,500 per violation. Working in coordination with Utah's AI Policy Act framework.",
+                link: "https://le.utah.gov/~2025/bills/static/HB0452.html"
+            },
+            {
+                billName: "Wellness and Oversight for Psychological Resources Act",
+                billNumber: "HB 1806",
+                state: "Illinois", 
+                sponsor: "Rep. Bob Morgan (D)",
+                party: "Democratic",
+                status: "Enacted",
+                lastAction: "2025-08-01",
+                introduced: "2024-02-14",
+                signedDate: "2025-08-01",
+                effectiveDate: "2025-08-01",
+                summary: "Prohibits anyone from using AI to provide mental health and therapeutic decision-making while allowing AI for administrative support services.",
+                keyProvisions: [
+                    "Prohibits AI from providing direct mental health and therapeutic decision-making",
+                    "Protects jobs of qualified behavioral health providers",
+                    "Allows AI for administrative and supplementary support services for licensed professionals",
+                    "Addresses concerns over AI chatbot use in youth mental health services",
+                    "Fines up to $10,000 for confirmed violations"
+                ],
+                enforcement: "Illinois Department of Financial and Professional Regulation (IDFPR) investigation authority. Illinois becomes first state to completely ban AI therapy services.",
+                link: "https://www.ilga.gov/legislation/BillStatus.asp?DocNum=1806&GAID=17&DocTypeID=HB&SessionID=112"
+            },
+            {
+                billName: "AI Mental Health Services Prohibition",
+                billNumber: "AB 406",
+                state: "Nevada",
+                sponsor: "Assembly Committee on Health and Human Services", 
+                party: "Committee",
+                status: "Enacted",
+                lastAction: "2025-07-01",
+                introduced: "2025-02-15",
+                signedDate: "2025-06-05",
+                effectiveDate: "2025-07-01",
+                summary: "Strictly prohibits AI from providing direct professional mental and behavioral healthcare while allowing administrative support uses.",
+                keyProvisions: [
+                    "Prohibits AI systems from offering diagnosis, treatment, or prevention of mental illnesses",
+                    "Bans AI providers from representing their systems as qualified therapists or psychiatrists", 
+                    "Permits AI for administrative tasks like scheduling, records, billing, and organizing notes",
+                    "Requires providers to independently review AI output accuracy for administrative tasks",
+                    "Civil penalties up to $15,000 per violation"
+                ],
+                enforcement: "Nevada Division of Public and Behavioral Health investigation authority. School provisions prohibit AI use for school counselor/psychologist functions.",
+                link: "https://www.leg.state.nv.us/App/NELIS/REL/83rd2025/Bill/7234/Overview"
+            },
+            
+            // Federal bills
+            {
+                billName: "Healthy Technology Act of 2025",
+                billNumber: "H.R. 238",
+                state: "Federal",
+                sponsor: "Rep. David Schweikert (R-AZ-01)",
+                party: "Republican",
+                status: "Committee Review",
+                lastAction: "2025-01-07",
+                introduced: "2025-01-07",
+                summary: "Amends Federal Food, Drug, and Cosmetic Act to allow AI and machine learning technologies to qualify as practitioners eligible to prescribe drugs with dual state and FDA authorization.",
+                keyProvisions: [
+                    "Extends practitioner definition to include AI/ML technologies",
+                    "Requires dual authorization: state statute AND FDA approval",
+                    "AI systems must be approved under FDA device pathways",
+                    "Establishes legal framework for AI prescription authority",
+                    "Builds on previous failed legislation from 2021-2023"
+                ],
+                enforcement: "Dual oversight through state medical licensing authorities and FDA medical device regulations",
+                link: "https://www.congress.gov/bill/119th-congress/house-bill/238"
+            },
+            {
+                billName: "CREATE AI Act of 2025",
+                billNumber: "H.R. 2385",
+                state: "Federal",
+                sponsor: "Rep. Jay Obernolte (R-CA-23), Co-sponsor Rep. Don Beyer (D-VA-08)",
+                party: "Republican",
+                status: "Committee Review",
+                lastAction: "2025-03-26",
+                introduced: "2025-03-26",
+                summary: "Establishes National Artificial Intelligence Research Resource (NAIRR) to democratize access to AI research infrastructure and computational resources for researchers nationwide.",
+                keyProvisions: [
+                    "Creates NAIRR Steering Subcommittee under NSF oversight",
+                    "Provides computational resources and large datasets for AI research",
+                    "Supports testing, benchmarking, and evaluation of AI systems",
+                    "Includes mental health applications within AI research framework",
+                    "Authorizes $430 million annual funding for FY2025-2030"
+                ],
+                enforcement: "National Science Foundation program management with OSTP coordination",
+                link: "https://www.congress.gov/bill/119th-congress/house-bill/2385"
+            },
+
+            // State bills
+            {
+                billName: "Companion Chatbots Safety Act",
+                billNumber: "SB 243",
+                state: "California",
+                sponsor: "Sen. Steve Padilla (D-San Diego)",
+                party: "Democratic",
+                status: "Active",
+                lastAction: "2025-07-15",
+                introduced: "2025-01-01",
+                summary: "Regulates AI companion chatbots to protect users from addictive and harmful interactions, particularly targeting mental health applications with comprehensive safety protocols.",
+                keyProvisions: [
+                    "Mandatory suicide prevention protocols with crisis referral systems",
+                    "Prohibition of reward systems encouraging compulsive use",
+                    "Required notifications every 3 hours reminding users they're not talking to humans",
+                    "Annual reporting to Office of Suicide Prevention on suicidal ideation incidents",
+                    "Independent third-party audits with public results",
+                    "Private right of action for violations"
+                ],
+                enforcement: "California Attorney General, private civil actions",
+                link: "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB243"
+            },
+            {
+                billName: "New York Artificial Intelligence Act",
+                billNumber: "S1169-A",
+                state: "New York",
+                sponsor: "Sen. Kristen Gonzalez (D-59)",
+                party: "Democratic",
+                status: "Committee Review",
+                lastAction: "2025-01-08",
+                introduced: "2025-01-08",
+                summary: "Comprehensive algorithmic discrimination prevention law regulating high-risk AI systems with specific coverage for healthcare and mental health decisions.",
+                keyProvisions: [
+                    "Covers healthcare and health insurance decisions as 'consequential decisions'",
+                    "Includes mental health care, dental, and vision in covered healthcare decisions",
+                    "Requires disclosure and opt-out rights for AI-assisted healthcare decisions",
+                    "Mandates independent audits of high-risk AI systems in healthcare",
+                    "Private right of action for algorithmic discrimination",
+                    "Civil penalties up to $20,000 per violation"
+                ],
+                enforcement: "NY Attorney General",
+                link: "https://www.nysenate.gov/legislation/bills/2025/S1169/amendment/A"
+            },
+            {
+                billName: "AI Companion Mental Health Legislation",
+                billNumber: "S5668/A6767",
+                state: "New York",
+                sponsor: "Sen. Kristen Gonzalez (D-59) & Assemblymember Clyde Vanel (D)",
+                party: "Democratic",
+                status: "Enacted",
+                lastAction: "2025-05-01",
+                introduced: "2025-01-01",
+                signedDate: "2025-05-01",
+                effectiveDate: "2025-11-05",
+                summary: "First-in-nation AI companion chatbot mental health safeguards requiring suicide detection protocols and mandatory disclosure requirements.",
+                keyProvisions: [
+                    "Requires suicide ideation detection protocols for AI companions",
+                    "Mandatory disclosure every 3 hours that user is communicating with AI, not human",
+                    "Prohibits AI companions without reasonable protocols for detecting self-harm expressions",
+                    "Refers users expressing suicidal thoughts to crisis hotlines (988)",
+                    "Civil penalties up to $15,000 per day for violations"
+                ],
+                enforcement: "NY Attorney General; fines support suicide prevention fund",
+                link: "https://www.governor.ny.gov/news/governor-hochul-signs-legislation-expanding-historic-empire-ai-consortium-and-establishing"
+            },
+            {
+                billName: "Health Insurance Utilization Review AI Act",
+                billNumber: "HB 820",
+                state: "Maryland",
+                sponsor: "Multiple Sponsors (House)",
+                party: "Bipartisan",
+                status: "Enacted",
+                lastAction: "2025-05-20",
+                introduced: "2025-01-01",
+                signedDate: "2025-05-20",
+                effectiveDate: "2025-10-01",
+                summary: "Regulates AI use by insurance carriers in healthcare decision-making with specific protections for mental health services.",
+                keyProvisions: [
+                    "Prohibits AI from denying, delaying, or modifying healthcare services including mental health",
+                    "Requires quarterly AI performance reviews by insurers",
+                    "Mandates disclosure if AI was used in adverse decisions",
+                    "Requires human oversight - AI cannot replace healthcare provider role",
+                    "Insurance Commissioner inspection authority for AI systems"
+                ],
+                enforcement: "Maryland Insurance Commissioner",
+                link: "https://mgaleg.maryland.gov/mgawebsite/Legislation/Details/HB0820?ys=2025rs"
+            },
+            {
+                billName: "AI Prior Authorization Restrictions",
+                billNumber: "HB 2861",
+                state: "Arizona",
+                sponsor: "Rep. Seth Blattman (D-9)",
+                party: "Democratic",
+                status: "Enacted",
+                lastAction: "2025-02-21",
+                introduced: "2025-01-01",
+                signedDate: "2025-02-21",
+                effectiveDate: "2025-07-01",
+                summary: "Prohibits AI from denying medical claims without physician review, with specific requirements for mental health claims.",
+                keyProvisions: [
+                    "Prohibits AI from denying medical claims without physician review",
+                    "Requires licensed provider review before AI can deny mental health claims",
+                    "Establishes appeal process for AI-denied claims",
+                    "Mandates transparency in AI decision-making processes"
+                ],
+                enforcement: "Arizona Department of Insurance and Financial Institutions",
+                link: "https://apps.azleg.gov/BillStatus/BillOverview/82861"
+            },
+            {
+                billName: "AI Mental Health Professional Ban",
+                billNumber: "AB 1234",
+                state: "New Jersey",
+                sponsor: "Assembly Science, Innovation and Technology Committee",
+                party: "Bipartisan",
+                status: "Committee Review",
+                lastAction: "2025-06-01",
+                introduced: "2025-01-01",
+                summary: "Prohibits AI systems from advertising as or acting as licensed mental health professionals with significant penalties.",
+                keyProvisions: [
+                    "Prohibits AI systems from advertising as licensed mental health professionals",
+                    "Prohibits AI from acting as qualified mental health providers",
+                    "$10,000 first offense, $20,000 subsequent offenses",
+                    "Enforcement under Consumer Fraud Act",
+                    "Similar to Nevada law language"
+                ],
+                enforcement: "New Jersey Division of Consumer Affairs",
+                link: "pending"
+            }
+        ];
+
+        let filteredStateLegislation = [];
+        let filteredFederalLegislation = [];
+        let currentStateSort = { column: null, direction: 'asc' };
+        let currentFederalSort = { column: null, direction: 'asc' };
+
+        function separateLegislation() {
+            filteredStateLegislation = allLegislation.filter(bill => bill.state !== 'Federal');
+            filteredFederalLegislation = allLegislation.filter(bill => bill.state === 'Federal');
+        }
+
+        function updateStatistics() {
+            const stateBills = allLegislation.filter(bill => bill.state !== 'Federal');
+            const passedCount = allLegislation.filter(bill => bill.status === 'Enacted' || bill.status === 'Passed').length;
+            const uniqueStates = [...new Set(stateBills.map(bill => bill.state))].length;
+
+            document.getElementById('totalBills').textContent = allLegislation.length;
+            document.getElementById('passedBills').textContent = passedCount;
+            document.getElementById('activeStates').textContent = uniqueStates;
+        }
+
+        function extractBillNumber(billName) {
+            // Extract bill number from bill name if not separate
+            const match = billName.match(/^([A-Z]+\s*\d+[A-Z]*)/);
+            return match ? match[1] : '';
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            });
+        }
+
+        function getStatusClass(status) {
+            switch(status.toLowerCase()) {
+                case 'enacted': return 'enacted';
+                case 'passed': return 'passed';
+                case 'pending': return 'pending';
+                case 'committee review': return 'committee';
+                case 'active': return 'active';
+                case 'introduced': return 'introduced';
+                default: return 'introduced';
+            }
+        }
+
+        function sortStateTable(columnIndex, dataKey) {
+            if (currentStateSort.column === columnIndex) {
+                currentStateSort.direction = currentStateSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentStateSort.direction = 'asc';
+            }
+            currentStateSort.column = columnIndex;
+
+            filteredStateLegislation.sort((a, b) => {
+                let valueA = a[dataKey] || '';
+                let valueB = b[dataKey] || '';
+
+                if (dataKey === 'lastAction') {
+                    valueA = new Date(valueA);
+                    valueB = new Date(valueB);
+                } else if (typeof valueA === 'string') {
+                    valueA = valueA.toLowerCase();
+                    valueB = valueB.toLowerCase();
+                }
+
+                if (currentStateSort.direction === 'asc') {
+                    return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+                } else {
+                    return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+                }
+            });
+
+            updateStateTables();
+        }
+
+        function sortFederalTable(columnIndex, dataKey) {
+            if (currentFederalSort.column === columnIndex) {
+                currentFederalSort.direction = currentFederalSort.direction === 'asc' ? 'desc' : 'asc';
+            } else {
+                currentFederalSort.direction = 'asc';
+            }
+            currentFederalSort.column = columnIndex;
+
+            filteredFederalLegislation.sort((a, b) => {
+                let valueA = a[dataKey] || '';
+                let valueB = b[dataKey] || '';
+
+                if (dataKey === 'lastAction') {
+                    valueA = new Date(valueA);
+                    valueB = new Date(valueB);
+                } else if (typeof valueA === 'string') {
+                    valueA = valueA.toLowerCase();
+                    valueB = valueB.toLowerCase();
+                }
+
+                if (currentFederalSort.direction === 'asc') {
+                    return valueA < valueB ? -1 : valueA > valueB ? 1 : 0;
+                } else {
+                    return valueA > valueB ? -1 : valueA < valueB ? 1 : 0;
+                }
+            });
+
+            updateStateTables();
+        }
+
+        function updateStateTables() {
+            // Update State Table
+            const stateBody = document.getElementById('stateTableBody');
+            const stateResultsInfo = document.getElementById('stateResultsInfo');
+            
+            if (filteredStateLegislation.length === 0) {
+                stateBody.innerHTML = '<tr><td colspan="6" class="no-data">No state legislation matches the current filter criteria</td></tr>';
+                stateResultsInfo.textContent = 'Showing 0 state bills';
+            } else {
+                stateBody.innerHTML = '';
+                filteredStateLegislation.forEach((bill, index) => {
+                    const originalIndex = allLegislation.indexOf(bill);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="state">${stateAbbreviations[bill.state] || bill.state}</td>
+                        <td class="bill-number">${bill.billNumber || extractBillNumber(bill.billName)}</td>
+                        <td>
+                            <span class="bill-name" onclick="openBillDetails(${originalIndex})">${bill.billName}</span>
+                        </td>
+                        <td class="sponsor">${bill.sponsor}</td>
+                        <td class="date">${formatDate(bill.lastAction)}</td>
+                        <td>
+                            <span class="status ${getStatusClass(bill.status)}">${bill.status}</span>
+                        </td>
+                    `;
+                    stateBody.appendChild(row);
+                });
+                stateResultsInfo.textContent = `Showing ${filteredStateLegislation.length} state bills`;
+            }
+
+            // Update Federal Table
+            const federalBody = document.getElementById('federalTableBody');
+            const federalResultsInfo = document.getElementById('federalResultsInfo');
+            
+            if (filteredFederalLegislation.length === 0) {
+                federalBody.innerHTML = '<tr><td colspan="6" class="no-data">No federal legislation matches the current filter criteria</td></tr>';
+                federalResultsInfo.textContent = 'Showing 0 federal bills';
+            } else {
+                federalBody.innerHTML = '';
+                filteredFederalLegislation.forEach((bill, index) => {
+                    const originalIndex = allLegislation.indexOf(bill);
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="state">Federal</td>
+                        <td class="bill-number">${bill.billNumber || extractBillNumber(bill.billName)}</td>
+                        <td>
+                            <span class="bill-name" onclick="openBillDetails(${originalIndex})">${bill.billName}</span>
+                        </td>
+                        <td class="sponsor">${bill.sponsor}</td>
+                        <td class="date">${formatDate(bill.lastAction)}</td>
+                        <td>
+                            <span class="status ${getStatusClass(bill.status)}">${bill.status}</span>
+                        </td>
+                    `;
+                    federalBody.appendChild(row);
+                });
+                federalResultsInfo.textContent = `Showing ${filteredFederalLegislation.length} federal bills`;
+            }
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const stateFilter = document.getElementById('stateFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+
+            // Filter state legislation
+            const stateBills = allLegislation.filter(bill => bill.state !== 'Federal');
+            filteredStateLegislation = stateBills.filter(bill => {
+                const matchesSearch = searchTerm === '' || 
+                    bill.billName.toLowerCase().includes(searchTerm) ||
+                    bill.billNumber.toLowerCase().includes(searchTerm) ||
+                    bill.state.toLowerCase().includes(searchTerm) ||
+                    bill.sponsor.toLowerCase().includes(searchTerm) ||
+                    bill.summary.toLowerCase().includes(searchTerm);
+
+                const matchesState = stateFilter === '' || bill.state === stateFilter;
+                const matchesStatus = statusFilter === '' || bill.status === statusFilter;
+
+                return matchesSearch && matchesState && matchesStatus;
+            });
+
+            // Filter federal legislation
+            const federalBills = allLegislation.filter(bill => bill.state === 'Federal');
+            filteredFederalLegislation = federalBills.filter(bill => {
+                const matchesSearch = searchTerm === '' || 
+                    bill.billName.toLowerCase().includes(searchTerm) ||
+                    bill.billNumber.toLowerCase().includes(searchTerm) ||
+                    bill.sponsor.toLowerCase().includes(searchTerm) ||
+                    bill.summary.toLowerCase().includes(searchTerm);
+
+                const matchesStatus = statusFilter === '' || bill.status === statusFilter;
+
+                return matchesSearch && matchesStatus;
+            });
+
+            updateStateTables();
+        }
+
+        function populateFilters() {
+            const stateSelect = document.getElementById('stateFilter');
+            const statusSelect = document.getElementById('statusFilter');
+
+            // Populate states (only non-federal)
+            const uniqueStates = [...new Set(allLegislation.filter(bill => bill.state !== 'Federal').map(bill => bill.state))].sort();
+            uniqueStates.forEach(state => {
+                const option = document.createElement('option');
+                option.value = state;
+                option.textContent = stateAbbreviations[state] || state;
+                stateSelect.appendChild(option);
+            });
+
+            // Populate statuses
+            const uniqueStatuses = [...new Set(allLegislation.map(bill => bill.status))].sort();
+            uniqueStatuses.forEach(status => {
+                const option = document.createElement('option');
+                option.value = status;
+                option.textContent = status;
+                statusSelect.appendChild(option);
+            });
+        }
+
+        function openBillDetails(billIndex) {
+            const bill = allLegislation[billIndex];
+            const modal = document.getElementById('billModal');
+            const modalBody = document.getElementById('modalBody');
+            const modalTitle = document.getElementById('modalBillName');
+
+            modalTitle.textContent = bill.billNumber + ' - ' + bill.billName;
+
+            let metaFields = '';
+            if (bill.introduced) metaFields += `<div class="meta-item"><div class="meta-label">Introduced</div><div class="meta-value">${formatDate(bill.introduced)}</div></div>`;
+            if (bill.signedDate) metaFields += `<div class="meta-item"><div class="meta-label">Signed</div><div class="meta-value">${formatDate(bill.signedDate)}</div></div>`;
+            if (bill.effectiveDate) metaFields += `<div class="meta-item"><div class="meta-label">Effective Date</div><div class="meta-value">${formatDate(bill.effectiveDate)}</div></div>`;
+
+            let keyProvisionsList = '';
+            if (bill.keyProvisions) {
+                keyProvisionsList = '<ul class="key-points">';
+                bill.keyProvisions.forEach(provision => {
+                    keyProvisionsList += `<li>${provision}</li>`;
+                });
+                keyProvisionsList += '</ul>';
+            }
+
+            modalBody.innerHTML = `
+                <div class="bill-meta">
+                    <div class="meta-item">
+                        <div class="meta-label">State/Level</div>
+                        <div class="meta-value">${bill.state}</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Bill Number</div>
+                        <div class="meta-value">${bill.billNumber}</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Primary Sponsor</div>
+                        <div class="meta-value">${bill.sponsor} (${bill.party})</div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Current Status</div>
+                        <div class="meta-value">
+                            <span class="status ${getStatusClass(bill.status)}">${bill.status}</span>
+                        </div>
+                    </div>
+                    <div class="meta-item">
+                        <div class="meta-label">Last Action</div>
+                        <div class="meta-value">${formatDate(bill.lastAction)}</div>
+                    </div>
+                    ${metaFields}
+                </div>
+
+                <div class="summary-section">
+                    <h3>Summary</h3>
+                    <p>${bill.summary}</p>
+                </div>
+
+                ${bill.keyProvisions ? `
+                <div class="summary-section">
+                    <h3>Key Provisions</h3>
+                    ${keyProvisionsList}
+                </div>
+                ` : ''}
+
+                ${bill.enforcement ? `
+                <div class="summary-section">
+                    <h3>Enforcement</h3>
+                    <p>${bill.enforcement}</p>
+                </div>
+                ` : ''}
+
+                ${bill.link && bill.link !== 'pending' ? `
+                <a href="${bill.link}" target="_blank" class="external-link">View Full Text</a>
+                ` : ''}
+            `;
+
+            modal.style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('billModal').style.display = 'none';
+        }
+
+        // Event listeners
+        document.getElementById('searchInput').addEventListener('input', applyFilters);
+        document.getElementById('stateFilter').addEventListener('change', applyFilters);
+        document.getElementById('statusFilter').addEventListener('change', applyFilters);
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('billModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            separateLegislation();
+            updateStatistics();
+            populateFilters();
+            updateStateTables();
+        });
+    </script>
+</body>
+</html>
