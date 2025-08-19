@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Citation Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            background: #A7D3E6;
+            color: #334155;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .header {
+            background: transparent;
+            padding: 1rem 2rem;
+            margin: -2rem -2rem 3rem -2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .header-logo {
+            width: 40px;
+            height: 60px;
+            background: #00000000;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .header-logo-placeholder {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .header-logo-placeholder svg {
+            width: 24px;
+            height: 24px;
+            color: white;
+        }
+        
+        .header-title {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin: 0;
+            letter-spacing: -0.025em;
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        
+        .header-description {
+            color: #475569;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .made-by-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .made-by-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+        
+        .style-badge {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+            color: #374151;
+            font-size: 0.875rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+        }
+        
+        /* Main top section with input and image side by side */
+        .top-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            margin-bottom: 10rem;
+            margin-top: 3rem;
+            justify-items: center;
+            align-items: center;
+        }
+        
+        .input-card {
+            background: #7DAACA;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            border: 2px solid #5CA4CC;
+            overflow: hidden;
+            max-width: 450px;
+            width: 100%;
+            align-self: end;
+            margin-bottom: 150px;
+            margin-left: 150px;
+
+        }
+        
+        .input-section {
+            padding: 1rem 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #1e3a5f;
+            font-size: 0.875rem;
+        }
+        
+        .source-input {
+            width: 100%;
+            padding: 0.625rem 1rem;
+            border: 2px solid #4a90b8;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            transition: all 0.15s ease;
+            min-height: 60px;
+            resize: vertical;
+            font-family: inherit;
+            background: #5CA4CC;
+            color: white;
+        }
+        
+        .source-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        
+        .source-input::placeholder {
+            color: #b8d4e3;
+        }
+        
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.75rem;
+            align-items: end;
+        }
+        
+        .select-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #4a90b8;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background: #5CA4CC;
+            color: white;
+            transition: all 0.15s ease;
+            cursor: pointer;
+        }
+        
+        .select-input:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        
+        .select-input option {
+            background: #5CA4CC;
+            color: white;
+        }
+        
+        .generate-btn {
+            background: #1355a1;
+            color: white;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 100px;
+            font-size: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+            width: 100px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            margin-top: -87px;
+            margin-left: 15px;
+        }
+        
+        .generate-btn:hover {
+            background: #7988b8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(29, 78, 216, 0.4);
+        }
+        
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+        
+        .mascot-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            object-fit: contain;
+            margin-bottom: 0rem;
+            border-radius: 0px;
+            transition: opacity 0.3s ease;
+        }
+        
+        .mascot-text {
+            color: #475569;
+            font-size: 0.875rem;
+            line-height: 1.5;
+        }
+        
+        /* Success message styles */
+        .success-message {
+            text-align: center;
+            margin: 2rem auto;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.5s ease;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1e293b;
+            letter-spacing: -0.025em;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            margin-top: -60px;
+        }
+
+        .success-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Bottom results section */
+        .results-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+        
+        .citation-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            border: 1px solid #cbd5e1;
+            overflow: hidden;
+        }
+        
+        .citation-header {
+            padding: 1.5rem 1.5rem 0 1.5rem;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 1.5rem;
+        }
+        
+        .citation-header h3 {
+            color: #1e293b;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .citation-header p {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+        
+        .citation-content {
+            padding: 0 1.5rem 1.5rem 1.5rem;
+            min-height: 200px;
+        }
+        
+        .citation-output {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            padding: 1.25rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.7;
+            word-wrap: break-word;
+            min-height: 120px;
+            position: relative;
+        }
+        
+        .bibliography-output {
+            font-size: 0.9rem;
+        }
+        
+        .in-text-output {
+            font-size: 0.95rem;
+        }
+        
+        .copy-btn {
+            background: #059669;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.15s ease;
+            display: none;
+        }
+        
+        .copy-btn:hover {
+            background: #047857;
+            transform: translateY(-1px);
+        }
+        
+        .copy-btn.show {
+            display: inline-block;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #9ca3af;
+            text-align: center;
+            height: 120px;
+            font-size: 0.875rem;
+        }
+        
+        .empty-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.75rem;
+            opacity: 0.4;
+        }
+        
+        .manual-entry {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #5CA4CC;
+        }
+        
+        .manual-entry.active {
+            display: grid;
+        }
+        
+        .manual-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #4a90b8;
+            border-radius: 8px;
+            font-size: 0.875rem;
+            background: #5CA4CC;
+            color: white;
+            transition: all 0.15s ease;
+        }
+        
+        .manual-input:focus {
+            outline: none;
+            border-color: #73946b;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        
+        .manual-input::placeholder {
+            color: #b8d4e3;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .header-left {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-right {
+                gap: 1rem;
+            }
+            
+            .top-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin-bottom: 3rem;
+            }
+            
+            .image-card {
+                order: -1;
+                min-height: 250px;
+                padding: 1.5rem;
+            }
+            
+            .mascot-image {
+                max-width: 200px;
+            }
+            
+            .image-placeholder {
+                max-width: 200px;
+                height: 200px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .results-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .manual-entry {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Hover effects for cards */
+        .citation-card:hover,
+        .input-card:hover {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transform: translateY(-1px);
+            transition: all 0.15s ease;
+        }
+        
+        /* Success animation */
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                transform: translate3d(0, -8px, 0);
+            }
+            70% {
+                transform: translate3d(0, -4px, 0);
+            }
+            90% {
+                transform: translate3d(0, -2px, 0);
+            }
+        }
+        
+        .bounce {
+            animation: bounce 1s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="header-left">
+                <img src="1.png" alt="Logo" class="header-logo">
+                <div class="header-title">
+                    <h1>Citation Generator</h1>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="header-description">Create perfect academic citations in MLA, APA, and Chicago styles</span>
+                <a href="index.html" class="made-by-btn">Made by</a>
+            </div>
+        </div>
+        
+        <!-- Top section with input on left and image on right -->
+        <div class="top-section">
+            <div class="input-card">
+                <div class="input-section">
+                    <div class="form-group">
+                        <label for="source-input">Source Information</label>
+                        <textarea 
+                            id="source-input" 
+                            class="source-input" 
+                            placeholder="Paste a URL, DOI, ISBN, or enter source details manually...
+
+Examples:
+â€¢ https://www.example.com/article
+â€¢ doi:10.1000/123456
+â€¢ ISBN: 9780123456789"
+                        ></textarea>
+                    </div>
+                    
+                    <div class="controls">
+                        <div class="form-group">
+                            <label for="citation-style">Citation Style</label>
+                            <select id="citation-style" class="select-input">
+                                <option value="mla">MLA (9th Edition)</option>
+                                <option value="apa">APA (7th Edition)</option>
+                                <option value="chicago-nb">Chicago Notes & Bibliography</option>
+                                <option value="chicago-ad">Chicago Author-Date</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="source-type">Source Type</label>
+                            <select id="source-type" class="select-input">
+                                <option value="auto">Auto-detect</option>
+                                <option value="book">Book</option>
+                                <option value="journal">Journal Article</option>
+                                <option value="website">Website</option>
+                                <option value="news">Newspaper Article</option>
+                                <option value="manual">Manual Entry</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button class="generate-btn" onclick="generateCitation()"> →</button>
+                        </div>
+                    </div>
+                    
+                    <div id="manual-entry" class="manual-entry">
+                        <div class="form-group">
+                            <label>Author(s)</label>
+                            <input type="text" class="manual-input" id="manual-author" placeholder="Last, First (multiple: Last1, First1; Last2, First2)">
+                        </div>
+                        <div class="form-group">
+                            <label>Title</label>
+                            <input type="text" class="manual-input" id="manual-title" placeholder="Title of the work">
+                        </div>
+                        <div class="form-group">
+                            <label>Publication/Journal</label>
+                            <input type="text" class="manual-input" id="manual-publication" placeholder="Publisher or Journal name">
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="text" class="manual-input" id="manual-date" placeholder="YYYY or Month DD, YYYY">
+                        </div>
+                        <div class="form-group">
+                            <label>Pages (optional)</label>
+                            <input type="text" class="manual-input" id="manual-pages" placeholder="pp. 123-145 or p. 123">
+                        </div>
+                        <div class="form-group">
+                            <label>URL/DOI (optional)</label>
+                            <input type="text" class="manual-input" id="manual-url" placeholder="https://... or doi:...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Image card on the right -->
+            <div class="image-card">
+                <img src="2.png" alt="Citation Helper Mascot" class="mascot-image">
+            </div>
+        </div>
+        
+        <!-- Success message container -->
+        <div id="success-message" class="success-message">
+            🎉 Your citation is ready! Scroll down to view and copy it.
+        </div>
+        
+        <!-- Bottom results section -->
+        <div class="results-section">
+            <div class="citation-card">
+                <div class="citation-header">
+                    <h3>Bibliography Citation</h3>
+                    <p>Full citation for your Works Cited, References, or Bibliography page</p>
+                </div>
+                <div class="citation-content">
+                    <div id="bibliography-result" class="citation-output bibliography-output">
+                        <div class="empty-state">
+                            <svg class="empty-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <p>Your bibliography citation will appear here</p>
+                        </div>
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard('bibliography-result')" id="copy-bib">Copy Citation</button>
+                </div>
+            </div>
+            
+            <div class="citation-card">
+                <div class="citation-header">
+                    <h3>In-Text Citation</h3>
+                    <p>How to cite this source within your paper</p>
+                </div>
+                <div class="citation-content">
+                    <div id="intext-result" class="citation-output in-text-output">
+                        <div class="empty-state">
+                            <svg class="empty-icon" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"/>
+                            </svg>
+                            <p>Your in-text citation example will appear here</p>
+                        </div>
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard('intext-result')" id="copy-intext">Copy Citation</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Show/hide manual entry fields
+        document.getElementById('source-type').addEventListener('change', function() {
+            const manualEntry = document.getElementById('manual-entry');
+            if (this.value === 'manual') {
+                manualEntry.classList.add('active');
+            } else {
+                manualEntry.classList.remove('active');
+            }
+        });
+
+        function generateCitation() {
+            const sourceInput = document.getElementById('source-input').value.trim();
+            const citationStyle = document.getElementById('citation-style').value;
+            const sourceType = document.getElementById('source-type').value;
+            
+            if (!sourceInput && sourceType !== 'manual') {
+                alert('Please enter a source or use manual entry.');
+                return;
+            }
+            
+            let sourceData = {};
+            
+            if (sourceType === 'manual') {
+                sourceData = getManualEntryData();
+                if (!sourceData.author && !sourceData.title) {
+                    alert('Please fill in at least the author and title fields.');
+                    return;
+                }
+            } else {
+                sourceData = parseSource(sourceInput, sourceType);
+            }
+            
+            const citations = formatCitation(sourceData, citationStyle);
+            displayCitations(citations);
+        }
+        
+        function getManualEntryData() {
+            return {
+                author: document.getElementById('manual-author').value,
+                title: document.getElementById('manual-title').value,
+                publication: document.getElementById('manual-publication').value,
+                date: document.getElementById('manual-date').value,
+                pages: document.getElementById('manual-pages').value,
+                url: document.getElementById('manual-url').value,
+                type: 'manual'
+            };
+        }
+        
+        function parseSource(input, sourceType) {
+            // Simple parsing logic - in a real app, this would use APIs
+            let data = {
+                author: 'Sample Author',
+                title: 'Sample Title',
+                publication: 'Sample Publication',
+                date: '2024',
+                url: input.startsWith('http') ? input : '',
+                type: sourceType === 'auto' ? detectSourceType(input) : sourceType
+            };
+            
+            // Basic URL parsing
+            if (input.startsWith('http')) {
+                data.title = 'Web Page Title';
+                data.publication = extractDomain(input);
+            } else if (input.includes('doi:')) {
+                data.type = 'journal';
+                data.title = 'Journal Article Title';
+                data.publication = 'Journal Name';
+            }
+            
+            return data;
+        }
+        
+        function detectSourceType(input) {
+            if (input.includes('doi:')) return 'journal';
+            if (input.startsWith('http')) return 'website';
+            if (input.includes('ISBN')) return 'book';
+            return 'website';
+        }
+        
+        function extractDomain(url) {
+            try {
+                return new URL(url).hostname.replace('www.', '');
+            } catch {
+                return 'Website';
+            }
+        }
+        
+        function formatCitation(data, style) {
+            const citations = {
+                bibliography: '',
+                intext: ''
+            };
+            
+            switch (style) {
+                case 'mla':
+                    citations.bibliography = formatMLABibliography(data);
+                    citations.intext = formatMLAInText(data);
+                    break;
+                case 'apa':
+                    citations.bibliography = formatAPAReference(data);
+                    citations.intext = formatAPAInText(data);
+                    break;
+                case 'chicago-nb':
+                    citations.bibliography = formatChicagoBibliography(data);
+                    citations.intext = formatChicagoNote(data);
+                    break;
+                case 'chicago-ad':
+                    citations.bibliography = formatChicagoReference(data);
+                    citations.intext = formatChicagoAuthorDate(data);
+                    break;
+            }
+            
+            return citations;
+        }
+        
+        // MLA Formatting Functions
+        function formatMLABibliography(data) {
+            let citation = '';
+            
+            if (data.author) {
+                citation += formatMLAAuthor(data.author) + '. ';
+            }
+            
+            if (data.type === 'website') {
+                citation += `"${data.title}." <em>${data.publication}</em>, `;
+                citation += `${data.date}, `;
+                if (data.url) citation += `${data.url}.`;
+            } else if (data.type === 'book') {
+                citation += `<em>${data.title}</em>. `;
+                citation += `${data.publication}, ${data.date}.`;
+            } else if (data.type === 'journal') {
+                citation += `"${data.title}." <em>${data.publication}</em>, `;
+                citation += `${data.date}`;
+                if (data.pages) citation += `, ${data.pages}`;
+                citation += '.';
+                if (data.url) citation += ` ${data.url}.`;
+            }
+            
+            return citation;
+        }
+        
+        function formatMLAInText(data) {
+            const author = data.author ? getLastName(data.author) : 'Author';
+            const citation = data.pages ? 
+                `(${author} ${data.pages.replace(/[^\d-]/g, '').split('-')[0]})` : 
+                `(${author})`;
+            
+            // Create example sentence based on source type
+            let exampleSentence = '';
+            if (data.type === 'journal') {
+                exampleSentence = `Recent research demonstrates significant implications for modern society ${citation}.`;
+            } else if (data.type === 'book') {
+                exampleSentence = `This foundational work establishes key principles that continue to influence contemporary thought ${citation}.`;
+            } else if (data.type === 'website') {
+                exampleSentence = `According to the latest findings, current trends show substantial growth in this area ${citation}.`;
+            } else {
+                exampleSentence = `The evidence clearly supports this conclusion ${citation}.`;
+            }
+            
+            return exampleSentence;
+        }
+        
+        function formatMLAAuthor(author) {
+            if (author.includes(';')) {
+                const authors = author.split(';');
+                const firstAuthor = authors[0].trim();
+                return firstAuthor + ', et al';
+            }
+            return author;
+        }
+        
+        // APA Formatting Functions
+        function formatAPAReference(data) {
+            let citation = '';
+            
+            if (data.author) {
+                citation += formatAPAAuthor(data.author) + ' ';
+            }
+            
+            citation += `(${data.date}). `;
+            
+            if (data.type === 'website') {
+                citation += `${data.title}. <em>${data.publication}</em>. `;
+                if (data.url) citation += `${data.url}`;
+            } else if (data.type === 'book') {
+                citation += `<em>${data.title}</em>. ${data.publication}.`;
+            } else if (data.type === 'journal') {
+                citation += `${data.title}. <em>${data.publication}</em>`;
+                if (data.pages) citation += `, ${data.pages}`;
+                citation += '.';
+                if (data.url) citation += ` ${data.url}`;
+            }
+            
+            return citation;
+        }
+        
+        function formatAPAInText(data) {
+            const author = data.author ? getLastName(data.author) : 'Author';
+            const citation = data.pages ? 
+                `(${author}, ${data.date}, p. ${data.pages.replace(/[^\d-]/g, '').split('-')[0]})` : 
+                `(${author}, ${data.date})`;
+            
+            // Create example sentences showing different APA usage patterns
+            let exampleSentence = '';
+            const authorName = author === 'Author' ? 'Smith' : author;
+            
+            if (data.type === 'journal') {
+                exampleSentence = `According to ${authorName} (${data.date}), the study reveals significant patterns in behavioral responses. This finding ${citation} has important implications for future research.`;
+            } else if (data.type === 'book') {
+                exampleSentence = `The theoretical framework established by previous scholars supports this approach ${citation}.`;
+            } else if (data.type === 'website') {
+                exampleSentence = `Current data indicates a marked increase in digital engagement trends ${citation}.`;
+            } else {
+                exampleSentence = `The research demonstrates clear evidence of this phenomenon ${citation}.`;
+            }
+            
+            return exampleSentence;
+        }
+        
+        function formatAPAAuthor(author) {
+            if (author.includes(';')) {
+                const authors = author.split(';');
+                const firstAuthor = authors[0].trim();
+                return firstAuthor + ', et al.';
+            }
+            return author;
+        }
+        
+        // Chicago Formatting Functions
+        function formatChicagoBibliography(data) {
+            let citation = '';
+            
+            if (data.author) {
+                citation += formatChicagoAuthor(data.author) + '. ';
+            }
+            
+            if (data.type === 'website') {
+                citation += `"${data.title}." <em>${data.publication}</em>. `;
+                citation += `${data.date}. `;
+                if (data.url) citation += `${data.url}.`;
+            } else if (data.type === 'book') {
+                citation += `<em>${data.title}</em>. `;
+                citation += `${data.publication}, ${data.date}.`;
+            } else if (data.type === 'journal') {
+                citation += `"${data.title}." <em>${data.publication}</em> `;
+                citation += `(${data.date})`;
+                if (data.pages) citation += `: ${data.pages}`;
+                citation += '.';
+                if (data.url) citation += ` ${data.url}.`;
+            }
+            
+            return citation;
+        }
+        
+        function formatChicagoNote(data) {
+            let note = '';
+            const authorName = data.author ? (getFirstName(data.author) + ' ' + getLastName(data.author)) : 'Sample Author';
+            
+            if (data.author) {
+                note += authorName + ', ';
+            }
+            
+            if (data.type === 'website') {
+                note += `"${data.title}," <em>${data.publication}</em>, `;
+                note += `${data.date}, `;
+                if (data.url) note += `${data.url}.`;
+            } else if (data.type === 'book') {
+                note += `<em>${data.title}</em> `;
+                note += `(${data.publication}, ${data.date})`;
+                if (data.pages) note += `, ${data.pages}`;
+                note += '.';
+            } else if (data.type === 'journal') {
+                note += `"${data.title}," <em>${data.publication}</em> `;
+                note += `(${data.date})`;
+                if (data.pages) note += `: ${data.pages}`;
+                note += '.';
+            }
+            
+            // Create example sentence with footnote
+            let exampleSentence = '';
+            if (data.type === 'journal') {
+                exampleSentence = `Historical evidence suggests that this phenomenon has deep cultural roots.¹<br><br><strong>Footnote:</strong><br>¹${note}`;
+            } else if (data.type === 'book') {
+                exampleSentence = `The comprehensive analysis reveals underlying patterns that shaped modern understanding.¹<br><br><strong>Footnote:</strong><br>¹${note}`;
+            } else if (data.type === 'website') {
+                exampleSentence = `Recent developments indicate significant changes in policy implementation.¹<br><br><strong>Footnote:</strong><br>¹${note}`;
+            } else {
+                exampleSentence = `This interpretation aligns with established scholarly consensus.¹<br><br><strong>Footnote:</strong><br>¹${note}`;
+            }
+            
+            return exampleSentence;
+        }
+        
+        function formatChicagoReference(data) {
+            return formatAPAReference(data); // Similar to APA format
+        }
+        
+        function formatChicagoAuthorDate(data) {
+            const author = data.author ? getLastName(data.author) : 'Author';
+            const citation = data.pages ? 
+                `(${author} ${data.date}, ${data.pages.replace(/[^\d-]/g, '').split('-')[0]})` : 
+                `(${author} ${data.date})`;
+            
+            // Create example sentence for Chicago Author-Date
+            let exampleSentence = '';
+            if (data.type === 'journal') {
+                exampleSentence = `The methodology employed in this study builds upon established research protocols ${citation}.`;
+            } else if (data.type === 'book') {
+                exampleSentence = `This theoretical framework continues to influence contemporary scholarship ${citation}.`;
+            } else if (data.type === 'website') {
+                exampleSentence = `Current statistics demonstrate the ongoing relevance of these findings ${citation}.`;
+            } else {
+                exampleSentence = `The evidence strongly supports this analytical approach ${citation}.`;
+            }
+            
+            return exampleSentence;
+        }
+        
+        function formatChicagoAuthor(author) {
+            return author;
+        }
+        
+        // Helper Functions
+        function getLastName(author) {
+            if (author.includes(',')) {
+                return author.split(',')[0].trim();
+            }
+            return author.split(' ').pop();
+        }
+        
+        function getFirstName(author) {
+            if (author.includes(',')) {
+                return author.split(',')[1].trim();
+            }
+            return author.split(' ').slice(0, -1).join(' ');
+        }
+        
+        function displayCitations(citations) {
+            document.getElementById('bibliography-result').innerHTML = citations.bibliography;
+            document.getElementById('intext-result').innerHTML = citations.intext;
+            
+            document.getElementById('copy-bib').classList.add('show');
+            document.getElementById('copy-intext').classList.add('show');
+            
+            // Change the mascot image
+            const mascotImage = document.querySelector('.mascot-image');
+            mascotImage.src = '3.png'; // Change to your success image
+            
+            // Show success message
+            showSuccessMessage();
+            
+            // Add bounce animation to cards
+            document.querySelectorAll('.citation-card').forEach(card => {
+                card.classList.add('bounce');
+                setTimeout(() => card.classList.remove('bounce'), 1000);
+            });
+        }
+        
+        function showSuccessMessage() {
+            const successMessage = document.getElementById('success-message');
+            
+            // Show the message
+            setTimeout(() => {
+                successMessage.classList.add('show');
+            }, 500);
+            
+            // Hide the message after 4 seconds
+            setTimeout(() => {
+                successMessage.classList.remove('show');
+            }, 4500);
+            
+            // Smooth scroll to results
+            setTimeout(() => {
+                document.querySelector('.results-section').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }, 1000);
+        }
+        
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const text = element.innerText || element.textContent;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#10b981';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#059669';
+                }, 2000);
+            }).catch(() => {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+        
+        // Allow Enter to generate citation
+        document.getElementById('source-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter' && e.ctrlKey) {
+                generateCitation();
+            }
+        });
+        
+        // Add some visual feedback for form interactions
+        document.querySelectorAll('.manual-input, .source-input, .select-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.style.transform = 'translateY(-2px)';
+                this.parentElement.style.transition = 'transform 0.15s ease';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
