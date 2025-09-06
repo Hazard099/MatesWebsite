@@ -83,7 +83,7 @@ input, select, textarea {
 	}
 
 	body {
-		background: #fff;
+		background: #332216;
 		overflow: hidden;
 	}
 
@@ -99,7 +99,7 @@ input, select, textarea {
 		}
 
 	body, input, select, textarea {
-		color: #fff;
+		color: #332216;
 		font-family: 'Source Sans Pro', sans-serif;
 		font-size: 15pt;
 		font-weight: 300 !important;
@@ -132,7 +132,7 @@ input, select, textarea {
 .project-text a {
     color: rgba(255, 255, 255, 0.7);
     font-size: 0.9rem;
-    font-weight: 300;
+    font-weight: 1300;
     letter-spacing: 0.1rem;
     text-transform: lowercase;
     text-decoration: none;
@@ -143,8 +143,6 @@ input, select, textarea {
 .project-text a:hover {
     color: rgba(255, 255, 255, 1);
 	text-decoration: none !important;
-
-
 }
 
 .project-item p {
@@ -157,7 +155,7 @@ input, select, textarea {
 
 .project-item h3 {
     margin: 0 0 0.5rem 0;
-    color: #ffffff;
+    color: #332216;
     font-size: 1.5rem;
     font-weight: 600;
 }
@@ -260,7 +258,7 @@ input, select, textarea {
 /* BG */
 
 	#bg {
-		background: #348cb2 url("images/bg.jpg") center center / cover no-repeat;
+		background: #ecf5e1 center center / cover no-repeat;
 		position: fixed;
 		top: 0;
 		left: 0;
@@ -528,7 +526,7 @@ input, select, textarea {
 		}
 
 		#header p {
-			font-size: 1.25em;
+			font-size: 1.45em;
 			margin: 0.75em 0 0.25em 0;
 			opacity: 0.75;
 		}
@@ -642,7 +640,7 @@ input, select, textarea {
 					-ms-transition: all 0.2s ease-in-out;
 					transition: all 0.2s ease-in-out;
 					border-radius: 100%;
-					border: solid 1px #fff;
+					border: solid 1px #332216;
 					display: block;
 					font-size: 1.75em;
 					height: 2.5em;
@@ -659,7 +657,7 @@ input, select, textarea {
 
 					#header nav a:hover:before {
 						background-color: rgba(255, 255, 255, 0.175);
-						color: #fff;
+						color: #332216;
 					}
 
 				#header nav a:active {
@@ -669,7 +667,7 @@ input, select, textarea {
 
 					#header nav a:active:before {
 						background-color: rgba(255, 255, 255, 0.35);
-						color: #fff;
+						color: #332216;
 					}
 
 				#header nav a span {

@@ -136,9 +136,10 @@
 
         .controls-row {
             display: grid;
-            grid-template-columns: 1fr auto auto auto;
+            grid-template-columns: 2fr auto auto auto;
             gap: 15px;
             align-items: center;
+            width: 100%;
         }
 
         .search-group {
@@ -156,6 +157,7 @@
 
         .search-group input, .search-group select {
             padding: 6px 8px;
+            max-width: 300px;
             border: 1px solid #ccc;
             font-size: 14px;
             border-radius: 3px;
@@ -504,7 +506,7 @@
                         Destination Countries: <span class="stat-number" id="uniqueDestinations">Loading...</span>
                     </div>
                     <div class="stat-item">
-                        Last Updated: <span class="stat-number">July 2025</span>
+                        Last Updated: <span class="stat-number">September 2025</span>
             </div>
         </div>
     </div>
@@ -557,7 +559,7 @@
             <strong>Data Export:</strong> 
             <button class="btn export-btn" onclick="exportToCSV()">Export to CSV</button>
             <button class="btn export-btn" onclick="exportToJSON()">Export to JSON</button>
-            <span style="margin-left: 15px; color: #666;">Last database update: July 23, 2025</span>
+            <span style="margin-left: 15px; color: #666;">Last database update: September 5, 2025</span>
         </div>
 
         <div class="about-section">
@@ -590,6 +592,202 @@
 
     <script>
         let allScientists = [
+            // ETH Zurich cluster (6 scientists)
+            {
+                name: "Prof. Sarbajit Banerjee",
+                previousInstitution: "Texas A&M University",
+                specialization: "Battery Materials & Electrochemical Energy Storage",
+                destination: "Switzerland",
+                newInstitution: "ETH Zurich",
+                newInstitutionDetails: "Professor of Battery Materials, Department of Chemistry and Applied Biosciences",
+                linkedin: "https://ethz.ch/en/the-eth-zurich/organisation/who-is-who/bsse/"
+            },
+            {
+                name: "Prof. Michele Vallisneri",
+                previousInstitution: "NASA Jet Propulsion Laboratory / Caltech",
+                specialization: "Gravitational-Wave Astrophysics",
+                destination: "Switzerland",
+                newInstitution: "ETH Zurich",
+                newInstitutionDetails: "Professor of Gravitational Physics, Department of Physics",
+                linkedin: "https://ethz.ch/en/the-eth-zurich/organisation/who-is-who/"
+            },
+            {
+                name: "Dr. Melissa Chapman",
+                previousInstitution: "UC Santa Barbara (NCEAS)",
+                specialization: "Environmental Data Science & Biodiversity",
+                destination: "Switzerland",
+                newInstitution: "ETH Zurich",
+                newInstitutionDetails: "Assistant Professor of Environmental Policy, Department of Environmental Systems Science",
+                linkedin: "https://ethz.ch/en/the-eth-zurich/organisation/who-is-who/"
+            },
+            {
+                name: "Dr. Michael Moor",
+                previousInstitution: "Stanford University",
+                specialization: "Medical AI & Biomedical Data Science",
+                destination: "Switzerland",
+                newInstitution: "ETH Zurich",
+                newInstitutionDetails: "Assistant Professor of Medical AI, Department of Biosystems Science and Engineering",
+                linkedin: "https://ethz.ch/en/the-eth-zurich/organisation/who-is-who/bsse/details.MjQ0MDY1.TGlzdC8xOTA2LC03MDcyMjgwNTA=.html"
+            },
+            {
+                name: "Dr. Sascha Feldmann",
+                previousInstitution: "Harvard University",
+                specialization: "Semiconductor Optoelectronics & Hybrid Perovskites",
+                destination: "Switzerland",
+                newInstitution: "EPFL",
+                newInstitutionDetails: "Assistant Professor of Physical Chemistry, EPFL Valais Wallis",
+                linkedin: "https://www.epfl.ch/labs/"
+            },
+            {
+                name: "Prof. Ryan Cotterell",
+                previousInstitution: "Johns Hopkins University",
+                specialization: "Natural Language Processing & Computational Linguistics",
+                destination: "Switzerland",
+                newInstitution: "ETH Zurich",
+                newInstitutionDetails: "Professor of Computer Science, Department of Computer Science",
+                linkedin: "https://rycolab.io/"
+            },
+
+            // University of Toronto cluster (4 scientists)
+            {
+                name: "Dr. Aviad Levis",
+                previousInstitution: "California Institute of Technology",
+                specialization: "Computational Imaging & AI for Scientific Discovery",
+                destination: "Canada",
+                newInstitution: "University of Toronto",
+                newInstitutionDetails: "Assistant Professor, Department of Computer Science",
+                linkedin: "https://www.aviadlevis.info"
+            },
+            {
+                name: "Dr. Roei Tell",
+                previousInstitution: "Massachusetts Institute of Technology",
+                specialization: "Theoretical Computer Science & Computational Complexity",
+                destination: "Canada",
+                newInstitution: "University of Toronto Scarborough",
+                newInstitutionDetails: "Assistant Professor, Department of Computer and Mathematical Sciences",
+                linkedin: "https://www.cs.toronto.edu/~roei/"
+            },
+            {
+                name: "Dr. Paul He",
+                previousInstitution: "University of Pennsylvania",
+                specialization: "Programming Language Theory & Computer Science Education",
+                destination: "Canada",
+                newInstitution: "University of Toronto",
+                newInstitutionDetails: "Assistant Professor, Teaching Stream, Department of Computer Science",
+                linkedin: "https://web.cs.toronto.edu/"
+            },
+            {
+                name: "Dr. Victor Couture",
+                previousInstitution: "UC Berkeley Haas School of Business",
+                specialization: "Urban Economics & Data Science Applications",
+                destination: "Canada",
+                newInstitution: "University of Toronto",
+                newInstitutionDetails: "Associate Professor, Rotman School of Management",
+                linkedin: "https://www.rotman.utoronto.ca/"
+            },
+
+            // Max Planck Institutes (3 scientists)
+            {
+                name: "Prof. Amélie Saintonge",
+                previousInstitution: "University College London (originally Cornell)",
+                specialization: "Galaxy Evolution & Star Formation",
+                destination: "Germany",
+                newInstitution: "Max Planck Institute for Radio Astronomy",
+                newInstitutionDetails: "Director, Bonn",
+                linkedin: "https://www.mpifr-bonn.mpg.de/"
+            },
+            {
+                name: "Prof. Yafang Cheng",
+                previousInstitution: "University of Iowa",
+                specialization: "Atmospheric Aerosols & Climate Impacts",
+                destination: "Germany",
+                newInstitution: "Max Planck Institute for Chemistry",
+                newInstitutionDetails: "Director and Scientific Member, Mainz",
+                linkedin: "https://www.mpic.de/"
+            },
+            {
+                name: "Prof. Guido Müller",
+                previousInstitution: "University of Florida",
+                specialization: "Physics & Gravitational Wave Detection",
+                destination: "Germany",
+                newInstitution: "Max Planck Institute for Gravitational Physics",
+                newInstitutionDetails: "Director, Department of Precision Interferometry, Hannover",
+                linkedin: "https://www.aei.mpg.de/"
+            },
+
+            // Other international destinations (8 scientists)
+            {
+                name: "Dr. Xiaoyu Song",
+                previousInstitution: "Icahn School of Medicine at Mount Sinai",
+                specialization: "Biostatistics & Quantitative Medicine",
+                destination: "Singapore",
+                newInstitution: "Duke-NUS Medical School",
+                newInstitutionDetails: "Associate Professor, Centre for Quantitative Medicine",
+                linkedin: "https://sites.google.com/view/xiaoyu-song/home"
+            },
+            {
+                name: "Dr. Mathieu Francoeur",
+                previousInstitution: "University of Utah",
+                specialization: "Mechanical Engineering & Thermal Radiation",
+                destination: "Canada",
+                newInstitution: "McGill University",
+                newInstitutionDetails: "Associate Professor, Faculty of Engineering",
+                linkedin: "https://www.mcgill.ca/engineering/"
+            },
+            {
+                name: "Dr. Anwar Hithnawi",
+                previousInstitution: "UC Berkeley",
+                specialization: "Data Privacy & Applied Cryptography",
+                destination: "Canada",
+                newInstitution: "University of Toronto",
+                newInstitutionDetails: "Assistant Professor, Department of Computer Science",
+                linkedin: "https://web.cs.toronto.edu/"
+            },
+            {
+                name: "Dr. Yi Shouliang",
+                previousInstitution: "US Department of Energy (National Energy Technology Laboratory)",
+                specialization: "Carbon Capture & Utilization Technology",
+                destination: "China",
+                newInstitution: "Sichuan University",
+                newInstitutionDetails: "Hai Na Distinguished Professor, Head of CCUS Innovation Team",
+                linkedin: "https://www.scu.edu.cn/"
+            },
+            {
+                name: "Dr. Sarah M. Kang",
+                previousInstitution: "Princeton University (PhD), Columbia University (Postdoc)",
+                specialization: "Climate Science & Atmospheric Dynamics",
+                destination: "Germany",
+                newInstitution: "Max Planck Institute for Meteorology",
+                newInstitutionDetails: "Director, Department of Climate Dynamics, Hamburg",
+                linkedin: "https://mpimet.mpg.de/"
+            },
+            {
+                name: "Dr. Kuldeep Meel",
+                previousInstitution: "Rice University (via NUS)",
+                specialization: "Formal Methods & Artificial Intelligence",
+                destination: "Canada",
+                newInstitution: "University of Toronto",
+                newInstitutionDetails: "Associate Professor, Department of Computer Science",
+                linkedin: "https://web.cs.toronto.edu/"
+            },
+            {
+                name: "Prof. Benjamin Sanderson",
+                previousInstitution: "University of Colorado Boulder / NCAR",
+                specialization: "Climate Science & Climate Modeling",
+                destination: "France",
+                newInstitution: "CNRS / Centre Européen de Recherche et de Formation Avancée en Calcul Scientifique",
+                newInstitutionDetails: "Research Director, Climate Modeling Team",
+                linkedin: "https://www.cerfacs.fr/"
+            },
+            {
+                name: "Dr. Julia Kempe",
+                previousInstitution: "New York University",
+                specialization: "Machine Learning & Quantum Computing",
+                destination: "France",
+                newInstitution: "École Normale Supérieure",
+                newInstitutionDetails: "Professor, Department of Computer Science, Paris",
+                linkedin: "https://www.di.ens.fr/"
+            },
             {
                 name: "Prof. Steven Barrett",
                 previousInstitution: "MIT",

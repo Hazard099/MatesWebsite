@@ -1,53 +1,119 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Projects - Mateo Ruiz-Leal</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #332216;
+            background: #ecf5e1;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #332216;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: #332216;
+            margin-bottom: 2rem;
+        }
+
+        .projects-list {
+            margin-bottom: 3rem;
+        }
+
+        .project-item {
+            margin-bottom: 2rem;
+            border: 1px solid #332216;
+            padding: 2rem;
+        }
+
+        .project-item h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #332216;
+            margin-bottom: 1rem;
+        }
+
+        .project-item p {
+            color: #332216;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-link {
+            color: #332216;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-nav {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .back-link {
+            color: #332216;
+            text-decoration: none;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-    <div id="wrapper">
-        <div id="bg"></div>
-        <div id="overlay"></div>
-        <div id="main">
-        <div id="main">
-            <header id="header">
-                <h1>My Projects</h1>
-                <p>Here are some things I've been working on</p>
-                <div style="height: 2rem;"></div> <!-- Added space -->
+    <div class="container">
+        <header>
+            <h1>My Projects</h1>
+            <p class="subtitle">Here are some things I've been working on</p>
+        </header>
 
-                <!-- Projects list -->
-                <div class="projects-content">
-                    <div class="project-item">
-                        <h3>Mental Health AI Legislation Tracker</h3>
-                        <p>A comprehensive database tracking state and federal legislation regulating artificial intelligence in mental health services. Features real-time monitoring of bills across all 50 states, detailed analysis of key provisions, and systematic tracking of legislative momentum in the evolving landscape of AI mental health regulation.</p>
-                        <a href="Mental Health.html" class="project-link">View Project →</a>
-                    </div>
+        <div class="projects-list">
+            <div class="project-item">
+                <h3>Mental Health AI Legislation Tracker</h3>
+                <p>A comprehensive database tracking state and federal legislation regulating artificial intelligence in mental health services. Features real-time monitoring of bills across all 50 states, detailed analysis of key provisions, and systematic tracking of legislative momentum in the evolving landscape of AI mental health regulation.</p>
+                <a href="Mental Health.html" class="project-link">View Project →</a>
+            </div>
 
-                    <div class="project-item">
-                        <h3>Brain Drain Tracker</h3>
-                        <p>A systematic tracker of US scientists relocating to international research positions. Documents the ongoing migration of scientific talent from American institutions to universities and labs worldwide, providing data on research brain drain patterns across different fields and destinations.</p>
-                        <a href="Brain Drain Tracker.html" class="project-link">View Project →</a>
-                    </div>
+            <div class="project-item">
+                <h3>Brain Drain Tracker</h3>
+                <p>A systematic tracker of US scientists relocating to international research positions. Documents the ongoing migration of scientific talent from American institutions to universities and labs worldwide, providing data on research brain drain patterns across different fields and destinations.</p>
+                <a href="Brain Drain Tracker.html" class="project-link">View Project →</a>
+            </div>
 
-                    <div class="project-item">
-                        <h3>Citation Generator</h3>
-                        <p>An automated academic citation generator supporting MLA, APA, and Chicago styles. Instantly converts DOIs, URLs, and manual entries into properly formatted citations with real-time data extraction from CrossRef API, streamlining the research writing process for students and scholars across all disciplines.</p>
-                        <a href="Cite.html" class="project-link">View Project →</a>
-                    </div>    
-                    
-                    <!-- Add more projects here later -->
-                </div>
-
-                <!-- Back to home link moved to bottom -->
-                <nav>
-                    <ul>
-                        <li><a href="index.html">Back&nbsp;to&nbsp;Home</a></li>
-                    </ul>
-                </nav>
-            </header>
+            <div class="project-item">
+                <h3>Citation Generator</h3>
+                <p>An automated academic citation generator supporting MLA, APA, and Chicago styles. Instantly converts DOIs, URLs, and manual entries into properly formatted citations with real-time data extraction from CrossRef API, streamlining the research writing process for students and scholars across all disciplines.</p>
+                <a href="Cite.html" class="project-link">View Project →</a>
+            </div>
         </div>
+
+        <nav class="back-nav">
+            <a href="index.html" class="back-link">Back to Home</a>
+        </nav>
     </div>
 </body>
 </html>
